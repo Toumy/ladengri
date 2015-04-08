@@ -3,13 +3,15 @@
 
 	require_once "facebook-php-sdk-v4-4.0-dev/autoload.php";
 	use Facebook\FacebookSession;
-    use Facebook\FacebookRedirectLoginHelper;
+  use Facebook\FacebookRedirectLoginHelper;
+  use Facebook\FacebookRequest;
+  use Facebook\GraphUser;
 
 	const APPID = "699704450158910";
-	const APPSECRTET = "32368c732c5d704afca02f7a591abe73" ;
+	const APPSECRET = "32368c732c5d704afca02f7a591abe73" ;
 	FacebookSession::setDefaultApplication(APPID, APPSECRET);
 
-    $redirectUrl = "http://localhost/";
+    $redirectUrl = "https://ladengri.herokuapp.com/";
     $helper = new FacebookRedirectLoginHelper($redirectUrl);
  ?>
 
@@ -50,7 +52,15 @@
 </div>
 
  <?php
-            $loginUrl    = $helper->getLoginUrl(['email,user_birthday']);
+           if (isset($_SESSION) && isset($_SESSION['fb_token']))
+           {
+            $session = helper->
+           }
+            $loginUrl    = $helper->getLoginUrl();
+            $token = (string) $session->getAccessToken();
+            $SESSION['fb_token'] = $token;
+
+
             $connectLink = '<a href='.$loginUrl.'>Login</a>';
             echo  $connectLink ;
 
